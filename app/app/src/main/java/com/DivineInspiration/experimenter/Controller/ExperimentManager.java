@@ -32,8 +32,8 @@ public class ExperimentManager extends ArrayList<Experiment> {
     // Singleton object
     private static ExperimentManager singleton;
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    String localUserId;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String localUserId;
 
     private String TAG = "DATABASE";
 
@@ -274,7 +274,6 @@ public class ExperimentManager extends ArrayList<Experiment> {
      * Adds a new experiment to database.
      * @param experiment experiment we want to add
      * @param callback the class to call after the operation is done
-     * @return void
      */
     public void addExperiment(Experiment experiment, OnOperationDone callback) {
         initLocalUserId();

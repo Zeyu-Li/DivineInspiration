@@ -41,15 +41,15 @@ import java.util.Map;
 import static android.content.Context.LOCATION_SERVICE;
 
 public class ScanFragment extends Fragment {
-    boolean allowCamera = false;
-    boolean openCamera = false;
-    Button scan;
+    private boolean allowCamera = false;
+    private boolean openCamera = false;
+    private Button scan;
 
     // scanned code
-    String[] scanned;
-    double myLat = 0;
-    double myLong = 0;
-    CodeScannerView scannerView;
+    private String[] scanned;
+    private double myLat = 0;
+    private double myLong = 0;
+    private CodeScannerView scannerView;
     private CodeScanner mCodeScanner;
 
     /**
@@ -104,8 +104,6 @@ public class ScanFragment extends Fragment {
                 }
             }
         });
-
-
     }
 
     /**
@@ -154,7 +152,7 @@ public class ScanFragment extends Fragment {
 
 
                         //id, type, params
-                        scanned = result.getText().split("-");
+                        scanned = result.getText().split("_");
 
                         if (scanned.length == 1) {
                             //must've scanned a bar code
@@ -163,7 +161,7 @@ public class ScanFragment extends Fragment {
                             for (String key : map.keySet()) {
                                 if (key.equals(scanned[0])) {
                                     //found a match barcode
-                                    scanned = ((String) map.get(key)).split("-");
+                                    scanned = ((String) map.get(key)).split("_");
                                     Toast.makeText(getContext(), "Found matching barcode", Toast.LENGTH_SHORT).show();
                                     break;
                                 }
@@ -216,12 +214,14 @@ public class ScanFragment extends Fragment {
                             } else {
                                 manager.queryExperimentFromId(scanned[0], experiment -> {
                                     AlertDialog dialog = new AlertDialog.Builder(getContext(), R.style.dialogColor)
-                                            .setTitle("Sub to :" + experiment.getExperimentName() + "?")
+                                            .setTitle("Sub to: " + experiment.getExperimentName() + "?")
                                             .setPositiveButton("Subscribe", ((dialog1, which) -> {
                                                 dialog1.dismiss();
                                                 manager.subToExperiment(userId, experiment.getExperimentID(), null);
                                                 Toast.makeText(getContext(), "You are now subsribed to: " + experiment.getExperimentName(), Toast.LENGTH_LONG).show();
                                             })).setNegativeButton("Cancel", null).create();
+
+                                        dialog.show();
                                 });
                             }
                         });
@@ -240,7 +240,7 @@ public class ScanFragment extends Fragment {
     /**
      * Gets current location
      */
-    public void getLocation() {
+    private void getLocation() {
         LocationManager mLocationManager = (LocationManager) getContext().getSystemService(LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{

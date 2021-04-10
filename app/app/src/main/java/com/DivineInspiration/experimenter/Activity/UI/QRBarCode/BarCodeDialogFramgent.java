@@ -32,15 +32,15 @@ import com.google.zxing.integration.android.IntentResult;
 
 public class BarCodeDialogFramgent extends DialogFragment {
 
-    String params;
-    boolean allowCamera = false;
-    boolean openCamera = false;
+    private String params;
+    private boolean allowCamera = false;
+    private boolean openCamera = false;
 
     private CodeScanner mCodeScanner;
-    CodeScannerView scannerView;
+    private CodeScannerView scannerView;
 
-    Button scan;
-    Dialog dialog;
+    private Button scan;
+    private Dialog dialog;
 
     /**
      * When dialog is created
@@ -148,13 +148,15 @@ public class BarCodeDialogFramgent extends DialogFragment {
                             SharedPreferences pref = getContext().getSharedPreferences("Barcode", Context.MODE_PRIVATE);
                             SharedPreferences.Editor editor = pref.edit();
                             if(pref.contains(result.getText())){
-                                Toast.makeText(getContext(), "This barcode has already been registered" + result.getText(), Toast.LENGTH_LONG).show();
-                            }else{
+                                Toast.makeText(getContext(), "This barcode has already been registered and will be replaced." + result.getText(), Toast.LENGTH_LONG).show();
+                                editor.remove(result.getText());
+
+                            }
                                 editor.putString(result.getText(), params);
                                 editor.apply();
                                 Toast.makeText(getContext(), "barcode instance saved\n" + result.getText(), Toast.LENGTH_LONG).show();
                                 dialog.dismiss();
-                            }
+
 
                         }
                         else{

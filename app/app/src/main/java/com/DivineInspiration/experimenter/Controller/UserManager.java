@@ -45,7 +45,7 @@ public class UserManager {
     private static UserManager singleton = null;    // Singleton object
 
     private User user;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private final String TAG = "USER";
 
@@ -87,7 +87,7 @@ public class UserManager {
     /**
      * Gets the current local user of the device.
      * @return the current user
-     * @Warning getLocalUser might return null if used during init
+     * @warning getLocalUser might return null if used during init
      */
     public User getLocalUser(){
         return user;

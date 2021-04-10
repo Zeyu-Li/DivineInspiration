@@ -17,6 +17,10 @@ import static org.junit.Assert.*;
 // TODO: Add tests for replies
 
 public class TestCommentManager implements CommentManager.OnCommentsReadyListener {
+
+
+
+
     CommentManager comm_mgr = CommentManager.getInstance();
     List<Comment> comments;
 
@@ -24,6 +28,7 @@ public class TestCommentManager implements CommentManager.OnCommentsReadyListene
         this.comments = comments;
     }
 
+    @Test
     public void testAddComment() {
         // Testing addComment & getExperimentComments
         Comment mockComment = new Comment("COMQR44SHQR12M6L0BHLTB", "XDC2BNUY5G", "Adit", new Date(), "No comment test"
